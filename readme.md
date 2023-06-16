@@ -13,6 +13,33 @@ In designing this project, I was inspired by the work of Memo Akten [Learning to
 In the Tenserflow Hub I found a tutorial on [Arbitrary image stylization](https://tensorflow.google.cn/hub/tutorials/tf2_arbitrary_image_stylization?hl=zh-cn), based on the model code in magenta. After working on this tutorial I tried to add a camera as the input content image and in the process I discovered that I could use the opencv function to call the local laptop camera directly in jupyter notebook, but not in Colab. So I started looking at how to use the local webcam in Colab.
 
 ```bash
+# HTML code defining the video player used to capture the image
+VIDEO_HTML = """
+<video autoplay
+ width=%d height=%d style='cursor: pointer;'></video>
+<script>
+
+var video = document.querySelector('video')
+
+navigator.mediaDevices.getUserMedia({ video: true })
+  .then(stream=> video.srcObject = stream)
+
+var data = new Promise(resolve=>{
+  video.onclick = ()=>{
+    var canvas = document.createElement('canvas')
+    var [w,h] =[video.offsetWidth, video.offsetHeight]
+    canvas.width = w
+    canvas.height = h
+    canvas.getContext('2d')
+          .drawImage(video, 0, 0, w, h)
+    video.srcObject.getVideoTracks()[0].stop()
+    video.replaceWith(canvas)
+    resolve(canvas.toDataURL('image/jpeg', %f))
+  }
+})
+</script>
+"""
+
 def take_photo(filename='photo.jpg', quality=1.0, size=(400,300)):
   display(HTML(VIDEO_HTML % (size[0],size[1],quality)))
   data = eval_js("data")
