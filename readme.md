@@ -3,10 +3,12 @@ Real-Time Image Style Transfer
 [Open in Colab](https://colab.research.google.com/drive/1TrY03YGp5YR7jpOlBRLhhGvHfyEpgzaM)
 [Presentation Video]()
 
+
 ## Introduction
 I hope that Reality and Virtual World will give the viewer a unique artistic experience and sensation. Through the rapid stylistic transfer of images in real time, the objective reality of photography is combined with the subjective expression of art, bringing a new sensory experience to the viewer. This technique blends elements of the real world with the artist's creativity, giving the photography a unique artistic and expressive quality.
 
 The work uses a pre-trained [megenta model](https://github.com/magenta/magenta/tree/main/magenta/models/arbitrary_image_stylization) by rchen152 and the TensorFlow Hub library to transform the images captured by the camera into images with a specified style in real time. With this creation I have attempted to push the boundaries of traditional photography and painting and to tightly integrate the real world with artistic expression.
+
 
 ## Design and Development
 In designing this project, I was inspired by the work of Memo Akten [Learning to See](https://www.memo.tv/works/learning-to-see/). His work allows for real-time pre-processing of the camera input into the neural network, which already performs real-time inference. However, as my work computer is a Macbook, I was concerned that my GPU would not be sufficient to support me in my work concerning neural network generation, so I tried to find a fast style transfer method, combined with real-time camera input, to achieve a simple real-time style transfer.
@@ -144,11 +146,10 @@ cap.release()
 cv2.destroyAllWindows()
 ```
 
+
 ## Summary and Reflection
-
-
-
-
+In this project, I implemented style conversion of camera images using the Python programming language and related libraries. Through learning and experimentation, I successfully loaded and applied a pre-trained image style conversion model and implemented real-time image capture and conversion. This project has improved my understanding of image processing and model applications, and honed my programming and problem solving skills.
+In future projects, I hope to develop this image style conversion functionality into a mobile application. Through a user-friendly interface, users can easily select a style image, take or import a content image and preview the style conversion effect in real time. Users can save the converted images and share them with friends. I also plan to add a batch processing function and an upload function for custom styled images to meet users' individual needs. By developing this project into an app, I hope to make image style conversions easily accessible to more people and provide them with a fun and creative interactive tool.
 
 
 ## Reference
