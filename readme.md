@@ -65,6 +65,7 @@ The following code is the core part of this project and implements the following
 4. After each loop, the counter is incremented and used to generate the file name.
 5. The user can exit the loop by pressing the 'q' key.
 6. At the end of the loop, the camera resource is released and the window is closed.
+
 In summary, this code allows the user to apply image style transitions to the camera's video stream in real time and save the captured and stylised images.
 
 ```bash
