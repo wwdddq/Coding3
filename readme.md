@@ -10,6 +10,17 @@ The work uses a pre-trained [megenta model](https://github.com/magenta/magenta/t
 ## Design and Development
 In designing this project, I was inspired by the work of Memo Akten [Learning to See](https://www.memo.tv/works/learning-to-see/). His work allows for real-time pre-processing of the camera input into the neural network, which already performs real-time inference. However, as my work computer is a Macbook, I was concerned that my GPU would not be sufficient to support me in my work concerning neural network generation, so I tried to find a fast style transfer method, combined with real-time camera input, to achieve a simple real-time style transfer.
 
+In the Tenserflow Hub I found a tutorial on [Arbitrary image stylization](https://tensorflow.google.cn/hub/tutorials/tf2_arbitrary_image_stylization?hl=zh-cn), based on the model code in magenta. After working on this tutorial I tried to add a camera as the input content image and in the process I discovered that I could use the opencv function to call the local laptop camera directly in jupyter notebook, but not in Colab. So I started looking at how to use the local webcam in Colab.
+
+```bash
+def take_photo(filename='photo.jpg', quality=1.0, size=(400,300)):
+  display(HTML(VIDEO_HTML % (size[0],size[1],quality)))
+  data = eval_js("data")
+  binary = b64decode(data.split(',')[1])
+  f = io.BytesIO(binary)
+  return np.asarray(Image.open(f))
+```
+As Colab is in the cloud server, Colab cannot call the local laptop camera directly with opencv. This code uses a method of acquiring camera images via JavaScript and HTML. A camera window is displayed using the display function and HTML code to allow the user to take a picture. Use JavaScript code to capture the camera image data and pass it to Python. Get the image data returned by the JavaScript code via eval_js("data"). Decode and convert the image data to a NumPy array. Return the NumPy array representing the captured image.
 
 
 ## Reference
