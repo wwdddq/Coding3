@@ -10,7 +10,30 @@ The work uses a pre-trained [megenta model](https://github.com/magenta/magenta/t
 ## Design and Development
 In designing this project, I was inspired by the work of Memo Akten [Learning to See](https://www.memo.tv/works/learning-to-see/). His work allows for real-time pre-processing of the camera input into the neural network, which already performs real-time inference. However, as my work computer is a Macbook, I was concerned that my GPU would not be sufficient to support me in my work concerning neural network generation, so I tried to find a fast style transfer method, combined with real-time camera input, to achieve a simple real-time style transfer.
 
-In the Tenserflow Hub I found a tutorial on [Arbitrary image stylization](https://tensorflow.google.cn/hub/tutorials/tf2_arbitrary_image_stylization?hl=zh-cn), based on the model code in magenta. After working on this tutorial I tried to add a camera as the input content image and in the process I discovered that I could use the opencv function to call the local laptop camera directly in jupyter notebook, but not in Colab. So I started looking at how to use the local webcam in Colab. I would like to thank [静心定心](https://blog.csdn.net/weixin_42143481/article/details/105771183?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522168681998016800225516119%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=168681998016800225516119&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-105771183-null-null.142^v88^insert_down38v5,239^v2^insert_chatgpt&utm_term=colab%E6%91%84%E5%83%8F%E5%A4%B4&spm=1018.2226.3001.4187) for sharing and successfully solving this problem.
+In the Tenserflow Hub I found a tutorial on [Arbitrary image stylization](https://tensorflow.google.cn/hub/tutorials/tf2_arbitrary_image_stylization?hl=zh-cn), based on the model code in magenta. 
+
+In the code, I replaced the original stylised image with one by my favourite artist Thierry Feuz [Silent Winds Avalon](https://www.thierryfeuz.com/silent-winds/hth545k06wuypp2jrgdobw9cl2z1hy). His work is gorgeous, disorienting and fantastically broken, like something out of this world or a cellular nerve. It's worth noting that users can customise the url of the style image in the load example images to explore the combination of reality and the virtual in their own personal aesthetic.
+
+```bash
+# @title Load example images  { display-mode: "form" }
+
+# style image can be customized
+style_image_url = 'https://images.squarespace-cdn.com/content/v1/5881f213a5790ac16d505983/1486549429319-3BHSRUYJO1TSUS5R2JEM/Silent-Winds-Avalon%2C-110x90cm%2C-2014-copie.jpg?format=1000w'  # @param {type:"string"}
+output_image_size = 384  # @param {type:"integer"}
+
+# The content image size can be arbitrary.
+content_img_size = (output_image_size, output_image_size)
+# The style prediction model was trained with image size 256 and it's the
+# recommended image size for the style image (though, other sizes work as
+# well but will lead to different results).
+style_img_size = (256, 256)
+
+style_image = load_image(style_image_url, style_img_size)
+style_image = tf.nn.avg_pool(style_image, ksize=[3,3], strides=[1,1], padding='SAME')
+show_n([style_image], ['Style image'])
+```
+
+After working on this tutorial I tried to add a camera as the input content image and in the process I discovered that I could use the opencv function to call the local laptop camera directly in jupyter notebook, but not in Colab. So I started looking at how to use the local webcam in Colab. I would like to thank [静心定心](https://blog.csdn.net/weixin_42143481/article/details/105771183?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522168681998016800225516119%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=168681998016800225516119&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-105771183-null-null.142^v88^insert_down38v5,239^v2^insert_chatgpt&utm_term=colab%E6%91%84%E5%83%8F%E5%A4%B4&spm=1018.2226.3001.4187) for sharing and successfully solving this problem.
 
 ```bash
 # HTML code defining the video player used to capture the image
