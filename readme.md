@@ -8,7 +8,7 @@ I hope that Reality and Virtual World will give the viewer a unique artistic exp
 The work uses a pre-trained [megenta model](https://github.com/magenta/magenta/tree/main/magenta/models/arbitrary_image_stylization) by rchen152 and the TensorFlow Hub library to transform the images captured by the camera into images with a specified style in real time. With this creation I have attempted to push the boundaries of traditional photography and painting and to tightly integrate the real world with artistic expression.
 
 ## Design and Development
-
+In designing this project, I was inspired by the work of Memo Akten [Learning to See](https://www.memo.tv/works/learning-to-see/). His work allows for real-time pre-processing of the camera input into the neural network, which already performs real-time inference. However, as my work computer is a Macbook, I was concerned that my GPU would not be sufficient to support me in my work concerning neural network generation, so I tried to find a fast style transfer method, combined with real-time camera input, to achieve a simple real-time style transfer.
 
 
 
