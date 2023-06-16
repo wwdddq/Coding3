@@ -1,6 +1,7 @@
 # Reality and Virtual World
 Real-Time Image Style Transfer
 [Open in Colab](https://colab.research.google.com/drive/1TrY03YGp5YR7jpOlBRLhhGvHfyEpgzaM)
+
 [Presentation Video]()
 
 
@@ -149,6 +150,7 @@ cv2.destroyAllWindows()
 
 ## Summary and Reflection
 In this project, I implemented style conversion of camera images using the Python programming language and related libraries. Through learning and experimentation, I successfully loaded and applied a pre-trained image style conversion model and implemented real-time image capture and conversion. This project has improved my understanding of image processing and model applications, and honed my programming and problem solving skills.
+
 In future projects, I hope to develop this image style conversion functionality into a mobile application. Through a user-friendly interface, users can easily select a style image, take or import a content image and preview the style conversion effect in real time. Users can save the converted images and share them with friends. I also plan to add a batch processing function and an upload function for custom styled images to meet users' individual needs. By developing this project into an app, I hope to make image style conversions easily accessible to more people and provide them with a fun and creative interactive tool.
 
 
