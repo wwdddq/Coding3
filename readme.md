@@ -50,6 +50,80 @@ def take_photo(filename='photo.jpg', quality=1.0, size=(400,300)):
 ```
 As Colab is in the cloud server, Colab cannot call the local laptop camera directly with opencv. This code uses a method of acquiring camera images via JavaScript and HTML. A camera window is displayed using the display function and HTML code to allow the user to take a picture. Use JavaScript code to capture the camera image data and pass it to Python. Get the image data returned by the JavaScript code via eval_js("data"). Decode and convert the image data to a NumPy array. Return the NumPy array representing the captured image.
 
+Next I created a folder on Google Drive to save the captured images with the stylised images.
+```bash
+# Create a folder for saving images
+save_folder = '/content/drive/MyDrive'  # Specify the path of the saved folder
+if not os.path.exists(save_folder):
+    os.makedirs(save_folder)
+```
+
+The following code is the core part of this project and implements the following functions:
+1. Turn on the camera and start capturing a video stream.
+2. In an infinite loop, images are captured through the camera and image stylisation is performed.
+3. The captured and stylised images are saved to a file.
+4. After each loop, the counter is incremented and used to generate the file name.
+5. The user can exit the loop by pressing the 'q' key.
+6. At the end of the loop, the camera resource is released and the window is closed.
+In summary, this code allows the user to apply image style transitions to the camera's video stream in real time and save the captured and stylised images.
+
+```bash
+# Turn on the camera
+cap=cv2.VideoCapture(0)
+
+# Defining the counter
+count = 0
+
+while True:
+    # Capture images
+    content_img = take_photo()
+
+    # Converting images to float32 arrays
+    content_img = content_img.astype(np.float32) / 255.0
+
+    # Image resizing and dimensionality
+    content_img = tf.image.resize(content_img, content_img_size)
+    content_img = tf.expand_dims(content_img, axis=0)
+
+    # Image style conversion
+    outputs = hub_module(content_img, tf.constant(style_image))
+    stylized_image = outputs[0]
+
+    # Display images
+    plt.imshow(stylized_image[0])
+    plt.axis('off')
+    plt.show()
+
+    # Save captured images and stylized images
+    content_img_array = np.squeeze(content_img.numpy())  # Converting TensorFlow tensors to NumPy arrays
+    stylized_img_array = np.squeeze(stylized_image.numpy())
+
+    cv2.imwrite(os.path.join(save_folder, f'content_img_{count}.jpg'), content_img_array)
+    cv2.imwrite(os.path.join(save_folder, f'stylized_image_{count}.jpg'), stylized_img_array)
+
+
+    # Add counter
+    count += 1
+
+    # Check for key input
+    try:
+        key = getpass(prompt='Press q to quit:')
+        if key == 'q':
+            break
+        clear_output(wait=True)
+    except KeyboardInterrupt:
+        break
+
+# Release the camera and close the window
+cap.release()
+cv2.destroyAllWindows()
+```
+
+
+
+
+
+
 
 ## Reference
 - [Megenta model](https://github.com/magenta/magenta/tree/main/magenta/models/arbitrary_image_stylization) 
